@@ -3,9 +3,9 @@
   "version": "1.0.1",
   "description": "Webserver for the Augur UI",
   "main": "server.js",
-	"bin": {
-		"augur-ui-webserver": "webserver.js"
-	}
+  "bin": {
+    "augur-ui-webserver": "webserver.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
