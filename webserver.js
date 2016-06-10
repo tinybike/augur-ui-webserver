@@ -12,9 +12,9 @@ var nodeStatic = require("node-static"),
 		cert: fs.readFileSync("cert.pem")
 	},
 	args = process.argv.slice(2);
-	
+
 if (!args.length) {
-	console.error("Argument required for build folder, ex: node server './build'");
+	console.error("Argument required for build folder, ex: augur-ui-webserver './build'");
 	process.exit();
 }
 
@@ -22,7 +22,7 @@ var homedir = args[0],
 	file = new(nodeStatic.Server)(homedir, {cache: 600}),
 	htmlFile,
 	files = fs.readdirSync(homedir);
-	
+
 for(var i in files) {
 	if(/index.*html/.test(files[i])) {
 		htmlFile = files[i];
