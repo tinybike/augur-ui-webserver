@@ -11,17 +11,29 @@ var nodeStatic = require("node-static"),
 		key: fs.readFileSync(__dirname + "/key.pem"),
 		cert: fs.readFileSync(__dirname + "/cert.pem")
 	},
-	args = process.argv.slice(2);
+	parser = new getopt.BasicParser("d:(directory)s(ssl)p:(port)", process.argv),
+	opt,
+	directory,
+	port,
+	protocol;
 
-if (!args.length) {
-	console.error("Argument required for build folder, ex: augur-ui-webserver './build'");
-	process.exit();
+while ((opt = parser.getopt()) !== undefined) {
+	switch (opt.option) {
+	case 'd':
+		directory = opt.optarg;
+		break;
+	case 's':
+		protocol = "https";
+		break;
+	case 'p':
+		port = opt.optarg;
+		break;
+	}
 }
 
-var homedir = args[0],
-	file = new(nodeStatic.Server)(homedir, {cache: 600}),
-	htmlFile,
-	files = fs.readdirSync(homedir);
+var file = new(nodeStatic.Server)(directory, {cache: 600}),
+	files = fs.readdirSync(directory),
+	htmlFile;
 
 for(var i in files) {
 	if(/index.*html/.test(files[i])) {
@@ -29,8 +41,15 @@ for(var i in files) {
 	}
 }
 
-function log(str) {
-	console.log(chalk.cyan.dim("[augur]"), str);
+runserver(protocol || "http", port || process.env.PORT || 8080);
+
+function runserver(protocol, port) {
+	if (protocol === "https") {
+		https.createServer(ssl, serveHTTP).listen(port);
+	} else {
+		http.createServer(serveHTTP).listen(port);
+	}
+	log(protocol + "://localhost:" + port.toString());
 }
 
 function serveHTTP(req, res) {
@@ -58,27 +77,6 @@ function serveHTTP(req, res) {
 	});
 }
 
-function runserver(protocol, port) {
-	if (protocol === "https") {
-		https.createServer(ssl, serveHTTP).listen(port);
-	} else {
-		http.createServer(serveHTTP).listen(port);
-	}
-	log(protocol + "://localhost:" + port.toString());
+function log(str) {
+	console.log(chalk.cyan.dim("[augur]"), str);
 }
-
-(function init(args) {
-	var opt, port, protocol, parser;
-	parser = new getopt.BasicParser("s(ssl)p:(port)", args);
-	while ((opt = parser.getopt()) !== undefined) {
-		switch (opt.option) {
-		case 's':
-			protocol = "https";
-			break;
-		case 'p':
-			port = opt.optarg;
-			break;
-		}
-	}
-	runserver(protocol || "http", port || process.env.PORT || 8080);
-})(process.argv);
