@@ -1,0 +1,30 @@
+{
+  "name": "augur-ui-webserver",
+  "version": "1.0.0",
+  "description": "Webserver for the Augur UI",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AugurProject/augur-ui-webserver.git"
+  },
+  "keywords": [
+    "augur",
+    "ui",
+    "webserver"
+  ],
+  "author": "",
+  "license": "AAL",
+  "bugs": {
+    "url": "https://github.com/AugurProject/augur-ui-webserver/issues"
+  },
+  "homepage": "https://github.com/AugurProject/augur-ui-webserver#readme",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "node-static": "^0.7.7",
+    "posix-getopt": "^1.2.0"
+  }
+}
