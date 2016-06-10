@@ -1,6 +1,6 @@
 {
   "name": "augur-ui-webserver",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Webserver for the Augur UI",
   "main": "server.js",
   "bin": {
