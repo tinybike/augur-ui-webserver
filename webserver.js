@@ -8,8 +8,8 @@ var nodeStatic = require("node-static"),
 	chalk = require("chalk"),
 	getopt = require("posix-getopt"),
 	ssl = {
-		key: fs.readFileSync("key.pem"),
-		cert: fs.readFileSync("cert.pem")
+		key: fs.readFileSync(__dirname + "/key.pem"),
+		cert: fs.readFileSync(__dirname + "/cert.pem")
 	},
 	args = process.argv.slice(2);
 
