@@ -81,6 +81,8 @@ function startServer() {
 			req.url = indexFile;
 		}
 
+		res.setHeader("X-XSS-Protection", "1; mode=block");
+
 		staticServer.serve(req, res, function (err, result) {
 			if (err) {
 				console.error("Error serving %s: %s", req.url, err.message);
