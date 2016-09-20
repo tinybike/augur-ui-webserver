@@ -81,6 +81,8 @@ function startServer() {
 			req.url = indexFile;
 		}
 
+		res.setHeader('X-Frame-Options', 'DENY');
+
 		staticServer.serve(req, res, function (err, result) {
 			if (err) {
 				console.error("Error serving %s: %s", req.url, err.message);
