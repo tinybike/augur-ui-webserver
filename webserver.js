@@ -81,6 +81,7 @@ function startServer() {
 			req.url = indexFile;
 		}
 
+		res.setHeader('X-Frame-Options', 'DENY');
 		res.setHeader("X-XSS-Protection", "1; mode=block");
 
 		staticServer.serve(req, res, function (err, result) {
